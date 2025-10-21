@@ -1,1 +1,117 @@
-<!DOCTYPE html><html lang='uk'><head><meta charset='UTF-8'><title>Device</title><link rel='stylesheet' href='assets/style.css'></head><body><h1>SmartPump Device</h1></body></html>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>SmartPump — Пристрій</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css"/>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="js/mqtt.min.js"></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body class="theme-dark device-layout">
+  <aside class="sidebar">
+    <div class="brand side-brand">
+      <img src="img/logo.png" class="logo" alt="DelongikShop"/>
+      <span>SmartPump v4.0</span>
+    </div>
+    <nav class="sidemenu">
+      <a href="#" data-tab="home" class="active">Головна</a>
+      <a href="#" data-tab="settings">Налаштування</a>
+      <a href="#" data-tab="events">Журнал подій</a>
+      <a href="#" data-tab="wifi">Wi-Fi</a>
+      <a href="#" data-tab="telegram">Telegram</a>
+    </nav>
+  </aside>
+
+  <main class="mainpanel">
+    <header class="device-header">
+      <div>
+        <h2 id="deviceTitle">SmartPump — </h2>
+        <div class="muted">MQTT: <code id="topicStatus"></code> / <code id="topicCmd"></code></div>
+      </div>
+      <div class="header-actions">
+        <label class="switch">
+          <input type="checkbox" id="simToggle">
+          <span class="slider"></span>
+        </label>
+        <span class="muted">Демо-симуляція</span>
+      </div>
+    </header>
+
+    <section class="tab active" id="tab-home">
+      <div class="grid-2">
+        <div class="card kpi">
+          <h3>Поточні дані</h3>
+          <div class="kpi-grid">
+            <div class="kpi-item"><span>Тиск</span><strong id="kpiPressure">—</strong><small>бар</small></div>
+            <div class="kpi-item"><span>Насос</span><strong id="kpiPump">—</strong></div>
+            <div class="kpi-item"><span>Wi-Fi</span><strong id="kpiWifi">—</strong></div>
+            <div class="kpi-item"><span>Енергія</span><strong id="kpiEnergy">—</strong><small>Вт⋅год</small></div>
+            <div class="kpi-item"><span>Аварія</span><strong id="kpiError">—</strong></div>
+          </div>
+        </div>
+
+        <div class="card actions">
+          <h3>Керування</h3>
+          <div class="btn-row">
+            <button class="btn btn-primary btn-glow" id="btnPumpOn">Увімкнути насос</button>
+            <button class="btn btn-danger btn-glow" id="btnPumpOff">Вимкнути насос</button>
+            <button class="btn btn-outline" id="btnReset">Скинути помилки</button>
+          </div>
+          <div class="muted">Статус MQTT: <span id="mqttStatus">—</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Графік тиску (реальний час)</h3>
+        <canvas id="pressureChart" height="120"></canvas>
+      </div>
+    </section>
+
+    <section class="tab" id="tab-settings">
+      <div class="card">
+        <h3>Налаштування пристрою</h3>
+        <div class="form-grid">
+          <label>Cut-In (бар)
+            <input type="number" step="0.05" id="settingCutIn" value="1.8">
+          </label>
+          <label>Cut-Out (бар)
+            <input type="number" step="0.05" id="settingCutOut" value="2.8">
+          </label>
+          <label>Device Name
+            <input type="text" id="settingName" placeholder="Напр. Котельня">
+          </label>
+        </div>
+        <button class="btn btn-primary btn-glow" id="btnSaveSettings">Зберегти</button>
+      </div>
+    </section>
+
+    <section class="tab" id="tab-events">
+      <div class="card">
+        <h3>Журнал подій</h3>
+        <ul id="eventLog" class="log"></ul>
+      </div>
+    </section>
+
+    <section class="tab" id="tab-wifi">
+      <div class="card">
+        <h3>Wi-Fi</h3>
+        <p class="muted">Для реальної конфігурації змініть прошивку/кабінет. У веб-демо тільки перегляд статусу MQTT.</p>
+      </div>
+    </section>
+
+    <section class="tab" id="tab-telegram">
+      <div class="card">
+        <h3>Telegram</h3>
+        <p class="muted">План інтеграції: бот сповіщає про аварії, low-pressure, перегрів і т.д.</p>
+      </div>
+    </section>
+  </main>
+
+  <script>DC.ready(()=>DC.device.init());</script>
+</body>
+</html>

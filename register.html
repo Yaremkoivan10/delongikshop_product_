@@ -1,1 +1,45 @@
-<!DOCTYPE html><html lang='uk'><head><meta charset='UTF-8'><title>Реєстрація</title><link rel='stylesheet' href='assets/style.css'></head><body><h1>Реєстрація користувача</h1></body></html>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Реєстрація — DelongikCloud</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css"/>
+  <script src="js/mqtt.min.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body class="theme-dark">
+  <header class="topbar">
+    <div class="brand">
+      <img src="img/logo.png" alt="DelongikShop" class="logo"/>
+      <span class="brand-title">DelongikCloud v3.0</span>
+    </div>
+  </header>
+
+  <main class="centered">
+    <div class="auth-card">
+      <h2>Створити обліковий запис</h2>
+      <form id="registerForm" class="form">
+        <label>Email
+          <input type="email" id="email" required placeholder="you@example.com">
+        </label>
+        <label>Пароль
+          <input type="password" id="password" required minlength="6" placeholder="••••••••">
+        </label>
+        <label>Підтвердження пароля
+          <input type="password" id="password2" required minlength="6" placeholder="••••••••">
+        </label>
+        <button type="submit" class="btn btn-primary btn-glow">Зареєструватися</button>
+        <p class="muted">Натискаючи, ви погоджуєтесь із локальними умовами (localStorage).</p>
+      </form>
+      <div class="alt">
+        Вже є акаунт? <a href="dashboard.html">Перейти до панелі</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">© 2025 DelongikShop</footer>
+  <script>DC.ready(()=>DC.auth.initRegisterPage());</script>
+</body>
+</html>
