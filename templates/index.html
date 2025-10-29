@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CyberX — Крипто біржа</title>
+  <link rel="stylesheet" href="/static/style.css"/>
+</head>
+<body>
+  <div class="grid">
+    <header class="card header">
+      <div class="brand">
+        <div class="glow-dot"></div>
+        <h1>CyberX<span class="thin">.exchange</span></h1>
+      </div>
+      <div class="status">
+        <span id="ws-status">● offline</span>
+      </div>
+    </header>
+
+    <section class="card controls">
+      <div class="row">
+        <label>Пара</label>
+        <select id="symbol"></select>
+      </div>
+      <div class="row">
+        <label>Інтервал</label>
+        <select id="interval">
+          <option value="1m">1 хв</option>
+          <option value="5m">5 хв</option>
+          <option value="15m">15 хв</option>
+          <option value="1h">1 год</option>
+          <option value="4h">4 год</option>
+          <option value="1d">1 день</option>
+        </select>
+      </div>
+      <div class="row">
+        <button id="load-klines">Завантажити свічки</button>
+      </div>
+      <div class="row convert">
+        <input id="fromAmount" type="number" step="0.00000001" value="0.01"/>
+        <select id="fromSym">
+          <option>BTC</option><option>ETH</option><option>SOL</option><option>BNB</option><option>DOGE</option><option>XRP</option>
+        </select>
+        <span class="arrow">→</span>
+        <select id="toSym">
+          <option>BTC</option><option>ETH</option><option>SOL</option><option>BNB</option><option>DOGE</option><option>XRP</option>
+        </select>
+        <button id="convertBtn">Конвертувати</button>
+        <div id="convertOut" class="muted"></div>
+      </div>
+    </section>
+
+    <section class="card ticker">
+      <h3>Live ціни</h3>
+      <div id="prices" class="prices"></div>
+    </section>
+
+    <section class="card chart">
+      <h3>Свічковий графік (<span id="chart-title"></span>)</h3>
+      <canvas id="chart" height="260"></canvas>
+    </section>
+
+    <section class="card ai">
+      <h3>AI помічник (Gemini)</h3>
+      <div class="ai-box">
+        <textarea id="ai-input" placeholder="Запитай в ІІ (про код, стратегії або пояснення)..."></textarea>
+        <button id="ai-send">Надіслати</button>
+      </div>
+      <pre id="ai-reply" class="code"></pre>
+    </section>
+
+    <footer class="card footer">
+      <div>© 2025 CyberX by <b>ArdenFire</b>. Демо (не для реальної торгівлі).</div>
+    </footer>
+  </div>
+
+  <script>
+    const SUPPORTED = {{ symbols|tojson }};
+  </script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
